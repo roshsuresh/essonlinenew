@@ -1,14 +1,23 @@
+
+import 'dart:convert';
+
+ActivationModel activationModelFromJson(String str) => ActivationModel.fromJson(json.decode(str));
+
+
+
 class ActivationModel {
-  final String subDomain;
-  final String schoolName;
-  final String logoUrl;
-  final String schoolId;
+  final String? subDomain;
+  final String? schoolName;
+  final String? logoUrl;
+  final String? schoolId;
 
   ActivationModel(
-      {required this.schoolId,
-      required this.subDomain,
-      required this.schoolName,
-      required this.logoUrl});
+      {
+      this.subDomain,
+       this.schoolName,
+       this.logoUrl,
+         this.schoolId,
+      });
 
   factory ActivationModel.fromJson(Map<String, dynamic> json) {
     return ActivationModel(

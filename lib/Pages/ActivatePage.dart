@@ -1,4 +1,5 @@
 
+import 'package:Ess_online/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rect_getter/rect_getter.dart';
@@ -61,23 +62,23 @@ class _ActivatePageState extends State<ActivatePage>
                                 decorationThickness: 5),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
                           // Image.network(provider.imageUrl),
                           // SizedBox(
-                          //   height: 10,
+                          //   height: 20,
                           // ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
+                           Padding(
+                             padding: const EdgeInsets.all(8.0),
+                             child: Text(
                               provider.schoolName,
-                              style: TextStyle(
+                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  overflow: TextOverflow.fade),
-                            ),
-                          ),
+                                   color: Colors.black,
+                                   overflow: TextOverflow.fade),
+                             ),
+                           ),
                           SizedBox(
                             height: 30,
                           ),
@@ -92,7 +93,7 @@ class _ActivatePageState extends State<ActivatePage>
                               child: Container(
                                 height: 50,
                                 decoration: BoxDecoration(
-                                    color: Colors.deepOrangeAccent,
+                                    color: UIGuide.primary4,
                                     borderRadius: BorderRadius.circular(15)),
                                 child: Center(
                                   child: Text(
@@ -165,15 +166,16 @@ class _ActivatePageState extends State<ActivatePage>
     //-->function for navigation
 
     SharedPreferences _pref = await SharedPreferences.getInstance();
-    // if (_pref.getString('accesstoken') == null) {
-    //   Navigator.of(context)
-    //       .push(FadeRouteBuilder(page: LoginUI()))
-    //       .then((_) => setState(() => rect = null));
-    // } else {
-      Navigator.of(context)
-          .push(FadeRouteBuilder(page: LoginPageWeb()))
+    
+      // Navigator.of(context)
+      //     .push(FadeRouteBuilder(page: LoginPageWeb()))
+    Navigator
+        .of(context)
+        .pushReplacement(new MaterialPageRoute(builder: (BuildContext context) {
+      return new LoginPageWeb();
+    }))
           .then((_) => setState(() => rect = null));
-    //}
+    
   }
 
   @override
@@ -198,101 +200,104 @@ class _ActivatePageState extends State<ActivatePage>
         Scaffold(
           body: isLoading
               ? Container(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
               : Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(
-                            loginBackground,
-                          ),
-                          fit: BoxFit.fill)),
-                  child: Center(
-                    child: Form(
-                      key: _formKey,
-                      //creating a column for text box and button
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 32, vertical: 8),
-                            child: Theme(
-                                data: Theme.of(context).copyWith(
-                                  hintColor: Colors.black,
-                                  inputDecorationTheme: InputDecorationTheme(
-                                      border: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey))),
-                                ),
-                                child: secretKey(secretKeyController)),
-                          ),
-                          RectGetter(
-                            key: rectGetterKey,
-                            child: InkWell(
-                              onTap: () async {
-                                sizeAnimationController.forward();
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
-                                  setState(() {
-                                    isLoading = true;
-                                  });
-                                  int statusCode = await Provider.of<
-                                          LoginProvider>(context, listen: false)
-                                      .getActivation(secretKeyController.text);
-                                  if (statusCode == 200) {
-                                    setState(() {
-                                      isLoading = false;
-                                      showBottomDialogSchool();
-                                    });
-                                  } else {
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                    final snackBar = SnackBar(
-                                        content:
-                                            Text(' Invalid activation key.'));
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  }
-                                } else {
-                                  return;
-                                }
-                              },
-                              child: AnimatedBuilder(
-                                animation: sizeAnimation,
-                                builder: (BuildContext context, Widget? child) {
-                                  print(
-                                      '${(width * 0.4) + sizeAnimation.value} size animation');
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: (width * 0.4 - 20) +
-                                          sizeAnimation.value,
-                                      height: 40 + sizeAnimation.value,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                              image:
-                                                  AssetImage(activationButton),
-                                              fit: BoxFit.fill)),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      loginBackground,
                     ),
-                  ),
+                    fit: BoxFit.fill)),
+            child: Center(
+              child: Form(
+                key: _formKey,
+                //creating a column for text box and button
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 8),
+                      child: Theme(
+                          data: Theme.of(context).copyWith(
+                            hintColor: Colors.black,
+                            inputDecorationTheme: InputDecorationTheme(
+                                border: OutlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: Colors.grey))),
+                          ),
+                          child: secretKey(secretKeyController)),
+                    ),
+                    RectGetter(
+                      key: rectGetterKey,
+                      child: InkWell(
+                        onTap: () async {
+                          sizeAnimationController.forward();
+                          FocusScope.of(context)
+                              .requestFocus(FocusNode());
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            setState(() {
+                              isLoading = false;
+                            });
+                            int statusCode = await Provider.of<
+                                LoginProvider>(context, listen: false)
+                                .getActivation(secretKeyController.text);
+                            if (statusCode == 200) {
+                              print(statusCode);
+                              //Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPageWeb()));
+                              setState(() {
+
+                                 isLoading = false;
+                                 showBottomDialogSchool();
+                              });
+                            } else {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              final snackBar = SnackBar(
+                                  content:
+                                  Text(' Invalid activation key.'));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                          } else {
+                            return;
+                          }
+                        },
+                        child: AnimatedBuilder(
+                          animation: sizeAnimation,
+                          builder: (BuildContext context, Widget? child) {
+                            print(
+                                '${(width * 0.4) + sizeAnimation.value} size animation');
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: (width * 0.4 - 20) +
+                                    sizeAnimation.value,
+                                height: 40 + sizeAnimation.value,
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                    BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                        image:
+                                        AssetImage(activationButton),
+                                        fit: BoxFit.fill)),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    )
+                  ],
                 ),
+              ),
+            ),
+          ),
         ),
         rect == null ? Container() : ripple(context, animationDuration, rect)
       ],

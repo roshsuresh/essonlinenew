@@ -18,6 +18,7 @@ class UIGuide {
   static const String check = "assets/check-square.svg";
   static const String profile = "assets/Profile.png";
 
+
   static const String reportcard = "assets/Reportcard.png";
   static const String baseURL = "https://api.schooltestonline.xyz";
 
@@ -33,7 +34,7 @@ class UIGuide {
   static const Color PRIMARY3 = Color(0XFFff6699);
   static const Color light_black = Color(0xff292C31);
 
-  static const Color offwhite = Color(0xffe6e6e6);
+  static const Color primary4 = Color(0xff17a2b8);
   Widget sizer20 = const SizedBox(
     height: 20,
   );

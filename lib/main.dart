@@ -12,54 +12,10 @@ import 'Pages/LoginPageWeb.dart';
 import 'Provider/LoginProvider.dart';
 
 
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   RemoteNotification? notification = message.notification;
-//   print('Handling a background message ${message.messageId}');
-//
-//   flutterLocalNotificationsPlugin.show(
-//     notification.hashCode,
-//     notification!.title,
-//     notification.body,
-//     NotificationDetails(
-//       android: AndroidNotificationDetails(
-//         channel.id,
-//         channel.name,
-//         icon: 'launch_background',
-//       ),
-//     ),
-//   );
-// }
-//
-// late AndroidNotificationChannel channel;
-//
-// late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
  Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  //  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  //  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  //
-  //  if (!kIsWeb) {
-  //   channel = const AndroidNotificationChannel(
-  //     'offer_notification_channel', // id
-  //     'offer notification channel', // title
-  //
-  //      importance: Importance.high,
-  //    );
-  //
-  //   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  //
-  //    await flutterLocalNotificationsPlugin
-  //       .resolvePlatformSpecificImplementation<
-  //           AndroidFlutterLocalNotificationsPlugin>()
-  //      ?.createNotificationChannel(channel);
-  //
-  //    await FirebaseMessaging.instance
-  //       .setForegroundNotificationPresentationOptions(
-  //     alert: true,
-  //      badge: true,
-  //     sound: true,
-  //    );
+ WidgetsFlutterBinding.ensureInitialized();
+
     runApp(GjInfoTech());
  }
 
@@ -73,38 +29,22 @@ class _GjInfoTechState extends State<GjInfoTech> {
   SharedPreferences? prefs;
   _checkSession() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     if (prefs.getBool('activated') != null) {
       activated = true;
     }
   }
 
   bool? activated;
+
   @override
   void initState() {
-    // Future.delayed(Duration.zero, () async {
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   if (prefs.getBool('activated') != null) {
-    //     activated = true;
-    //   }
-    // });
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   RemoteNotification? notification = message.notification;
-    //   AndroidNotification? android = message.notification?.android;
-    //   if (notification != null && android != null && !kIsWeb) {
-    //     flutterLocalNotificationsPlugin.show(
-    //       notification.hashCode,
-    //       notification.title,
-    //       notification.body,
-    //       NotificationDetails(
-    //         android: AndroidNotificationDetails(
-    //           channel.id,
-    //           channel.name,
-    //           icon: 'launch_background',
-    //         ),
-    //       ),
-    //     );
-    //   }
-    // });
+    Future.delayed(Duration.zero, () async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (prefs.getBool('activated') != null) {
+        activated = true;
+      }
+    });
     super.initState();
   }
 
@@ -140,6 +80,7 @@ class _GjInfoTechState extends State<GjInfoTech> {
         // home: MyHomePage(title: 'Flutter Demo Home Page'),
         routes: routes,
         home: SplashFuturePage(),
+        debugShowCheckedModeBanner: false,
         //home : MyHomepage(),
         //home:LoginSecondPage(),
       ),
@@ -164,7 +105,7 @@ class _SplashFuturePageState extends State<SplashFuturePage> {
         return Future.value(LoginPageWeb());
 
       } else {
-        return Future.value(ActivatePage());
+        return Future.value(LoginPageWeb());
       }
     } else {
       return Future.value(ActivatePage());
@@ -176,7 +117,7 @@ class _SplashFuturePageState extends State<SplashFuturePage> {
     return EasySplashScreen(
       logo: Image.asset('assets/logo.png'),
       title: Text(
-        "Ess Plus",
+        "Ess Online",
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
